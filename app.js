@@ -23,6 +23,7 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
 
     });
 	
+//	SPECIFIC CLIENT SUMMARY
     app.get('/dev', function(req, res) {
         var client = req.query.client;
         db.collection('dev_projects').find({client: client}).sort({archivedDate: -1}).toArray(function(err, docs) {
@@ -30,6 +31,7 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
         });
     });
     
+//	ADD CLIENT TO DEV DATABASE
     app.post('/add_conf', function(req, res, next) {
         var projectNum = req.body.projectNum;
 		var client = req.body.client;
