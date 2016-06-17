@@ -37,13 +37,36 @@
         </div>
     </nav>
 
-
-    {% for project in dev_projects %}
-    <li>{{ project.archivedDate }} : {{ project.client }} : {{ project.profitMargin }}</li>
-    {% else %}
-    <li>No projects found.</li>
-    {% endfor %}
-
+	<div class="row">
+		<div class="container">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>archivedDate</th>
+						<th>projectNum</th>
+						<th>profitMargin</th>
+						<th>hoursLogged</th>
+						<th>velocity</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for project in dev_projects %}
+						<tr>
+							<td>{{project.archivedDate}}</td>
+							<td>{{project.projectNum}}</td>
+							<td>{{project.profitMargin}}</td>
+							<td>{{project.hoursLogged}}</td>
+							<td>{{project.velocity}}</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td>No Projects Found</td>		
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	
