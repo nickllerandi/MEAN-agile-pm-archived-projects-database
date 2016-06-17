@@ -1,0 +1,53 @@
+<!doctype HTML>
+<head>
+    <title>Dev Projects</title>
+	
+	<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="/">The Liqui Intranet App Database Thing</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                        <!--
+                        <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dev <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                        <li><a href="/">View Dev Summary</a></li>
+                        <li><a href="#">Add Dev Project</a></li>
+                        </ul>
+                        </li>
+                        <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Digi <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                        <li><a href="/">View Retainer Summary</a></li>
+                        <li><a href="#">Add Retainer Project</a></li>
+                        </ul>
+                        </li>
+                        -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    {% for project in dev_projects %}
+    <li>{{ project.archivedDate }} : {{ project.client }} : {{ project.profitMargin }}</li>
+    {% else %}
+    <li>No projects found.</li>
+    {% endfor %}
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	
+	<!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</body>
