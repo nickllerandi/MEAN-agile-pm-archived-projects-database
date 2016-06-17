@@ -20,11 +20,18 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
 		db.collection('dev_projects').find({}).sort({archivedDate: -1}).toArray(function(err, docs) {
 			res.render('home', { 'dev_projects': docs } );
         });
-
     });
 	
-//	SPECIFIC CLIENT SUMMARY
-    app.get('/dev', function(req, res) {
+//	QUERY BY ARCHIVEDDATE
+	app.get('/dev/archivedDate', function(req, res) {
+        var archivedDate = parseInt(req.query.archivedDate);
+        db.collection('dev_projects').find({archivedDate: archivedDate}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('dev_client', {'dev_projects' : docs});
+        });
+    });
+	
+//	QUERY BY CLIENT
+    app.get('/dev/client', function(req, res) {
         var client = req.query.client;
         db.collection('dev_projects').find({client: client}).sort({archivedDate: -1}).toArray(function(err, docs) {
 			res.render('dev_client', {'dev_projects' : docs});
