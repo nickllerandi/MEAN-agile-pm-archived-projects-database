@@ -17,24 +17,32 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
 
 //	ALL PROJECTS SUMMARY
     app.get('/', function(req, res){
-		db.collection('dev_projects').find({}).sort({archivedDate: -1}).toArray(function(err, docs) {
-			res.render('home', { 'dev_projects': docs } );
+		db.collection('projects').find({}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('home', { 'projects' : docs } );
         });
     });
 	
+// QUERY BY TYPE OF PROJECT
+	app.get('/type', function(req, res){
+		var type = req.query.type;
+		db.collection('projects').find({type: type}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('queries', { 'projects' : docs } );
+        });
+    });    
+	
 //	QUERY BY ARCHIVEDDATE
-	app.get('/dev/archivedDate', function(req, res) {
+	app.get('/archivedDate', function(req, res) {
         var archivedDate = parseInt(req.query.archivedDate);
-        db.collection('dev_projects').find({archivedDate: archivedDate}).sort({archivedDate: -1}).toArray(function(err, docs) {
-			res.render('dev_client', {'dev_projects' : docs});
+        db.collection('projects').find({archivedDate: archivedDate}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('queries', {'projects' : docs});
         });
     });
 	
 //	QUERY BY CLIENT
-    app.get('/dev/client', function(req, res) {
+    app.get('/client', function(req, res) {
         var client = req.query.client;
-        db.collection('dev_projects').find({client: client}).sort({archivedDate: -1}).toArray(function(err, docs) {
-			res.render('dev_client', {'dev_projects' : docs});
+        db.collection('projects').find({client: client}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('queries', {'projects' : docs});
         });
     });
     
@@ -53,11 +61,11 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
         } else {
 			projectNum = parseInt(projectNum);
 			invoice = parseInt(invoice);
-            db.collection('dev_projects').insertOne(
+            db.collection('projects').insertOne(
                 { 'projectNum': projectNum, 'client': client, 'invoice': invoice, 'profitMargin': profitMargin, 'hoursLogged': hoursLogged, 'archivedDate': archivedDate, 'velocity': velocity },
                 function (err, r) {
                     assert.equal(null, err);
-                    res.send("Document inserted with _id: " + r.insertedId);
+                    res.render('home', {'projects':docs});
                 }
             );
         }
@@ -71,8 +79,9 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
         var port = server.address().port;
         console.log('Express server listening on port %s.', port);
     });
-
 });
+
+
 
 
 
