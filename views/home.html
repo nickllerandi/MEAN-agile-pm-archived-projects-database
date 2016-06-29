@@ -49,7 +49,8 @@
 					<thead>
 						<tr>
 							<th>Type</th>
-							<th>Archived/Recorded date</th>
+							<th>Archived Year</th>
+							<th>Archived Yr/Mo</th>
 							<th>Client</th>
 							<th>Profit Margin</th>
 						</tr>
@@ -58,6 +59,7 @@
 						{% for project in projects %}
 							<tr>
 								<td><a href='/type?type={{project.type}}'>{{project.type}}</a></td>
+								<td><a href='/archivedYear?archivedYear={{project.archivedYear}}'>{{project.archivedYear}}</a></td>
 								<td><a href='/archivedDate?archivedDate={{project.archivedDate}}'>{{project.archivedDate}}</a></td>
 								<td><a href='/client?client={{project.client}}'>{{ project.client }}</a></td>
 								<td>{{project.profitMargin}}</td>

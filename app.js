@@ -30,6 +30,14 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
         });
     });    
 	
+//	QUERY BY ARCHIVEDYEAR
+	app.get('/archivedYear', function(req, res){
+		var archivedYear = parseInt(req.query.archivedYear);
+		db.collection('projects').find({archivedYear: archivedYear}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('queries', { 'projects' : docs } );
+        });
+    });
+	
 //	QUERY BY ARCHIVEDDATE
 	app.get('/archivedDate', function(req, res) {
         var archivedDate = parseInt(req.query.archivedDate);
