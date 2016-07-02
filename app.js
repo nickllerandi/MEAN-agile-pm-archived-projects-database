@@ -28,7 +28,23 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
 		db.collection('projects').find({type: type}).sort({archivedDate: -1}).toArray(function(err, docs) {
 			res.render('queries', { 'projects' : docs } );
         });
-    });    
+    });   
+	
+//	QUERY BY CLIENT
+    app.get('/client', function(req, res) {
+        var client = req.query.client;
+        db.collection('projects').find({client: client}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('queries', {'projects' : docs});
+        });
+    });
+	
+//	QUERY BY Project Number
+    app.get('/projectNum', function(req, res) {
+        var projectNum = parseInt(req.query.projectNum);
+        db.collection('projects').find({projectNum: projectNum}).sort({archivedDate: -1}).toArray(function(err, docs) {
+			res.render('queries', {'projects' : docs});
+        });
+    });
 	
 //	QUERY BY ARCHIVEDYEAR
 	app.get('/archivedYear', function(req, res){
@@ -45,35 +61,41 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
 			res.render('queries', {'projects' : docs});
         });
     });
-	
-//	QUERY BY CLIENT
-    app.get('/client', function(req, res) {
-        var client = req.query.client;
-        db.collection('projects').find({client: client}).sort({archivedDate: -1}).toArray(function(err, docs) {
-			res.render('queries', {'projects' : docs});
-        });
-    });
     
 //	ADD CLIENT TO DEV DATABASE
     app.post('/add_conf', function(req, res, next) {
-        var projectNum = req.body.projectNum;
+		var type = req.body.type;
+        var projectNum = parseInt(req.body.projectNum);
 		var client = req.body.client;
-		var invoice = req.body.invoice;
-		var profitMargin = parseFloat(req.body.profitMargin);
-		var hoursLogged = parseFloat(req.body.hoursLogged);
+		var invoiceNum = parseInt(req.body.invoiceNum);
+		var invoice = parseFloat(req.body.invoice);
+		var archivedYear = parseInt(req.body.archivedYear);
 		var archivedDate = parseInt(req.body.archivedDate);
-        var velocity = parseInt(req.body.velocity);
+		var profitMargin = req.body.profitMargin;
+		var hoursLogged = req.body.hoursLogged;
+        var velocity = req.body.velocity;
         
-        if ((projectNum == '') || (client == '') || (invoice == '')) {
+        if ((type == '') || (projectNum == '') || (client == '') || (invoice == '')) {
             next("projectNum, client, and invoice are all required");
         } else {
-			projectNum = parseInt(projectNum);
-			invoice = parseInt(invoice);
-            db.collection('projects').insertOne(
-                { 'projectNum': projectNum, 'client': client, 'invoice': invoice, 'profitMargin': profitMargin, 'hoursLogged': hoursLogged, 'archivedDate': archivedDate, 'velocity': velocity },
+//			profitMargin = parseFloat(req.body.profitMargin);
+//			hoursLogged = parseFloat(req.body.hoursLogged);
+//			velocity = parseInt(req.body.velocity);
+            db.collection('projects').insertOne({ 
+				'type': type, 
+				'projectNum': projectNum, 
+				'client': client, 
+				'invoiceNum': invoiceNum,
+				'invoice': invoice,
+				'archivedYear': archivedYear,
+				'archivedDate': archivedDate,
+				'profitMargin': profitMargin, 
+				'hoursLogged': hoursLogged, 
+				'velocity': velocity 
+			},
                 function (err, r) {
                     assert.equal(null, err);
-                    res.render('home', {'projects':docs});
+                    res.send('thnx :)');
                 }
             );
         }

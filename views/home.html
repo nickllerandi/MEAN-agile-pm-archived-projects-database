@@ -49,20 +49,30 @@
 					<thead>
 						<tr>
 							<th>Type</th>
+							<th>Client</th>
+							<th>Project Number</th>
+							<th>Invoice Number</th>
+							<th>Invoice Amount</th>
 							<th>Archived Year</th>
 							<th>Archived Yr/Mo</th>
-							<th>Client</th>
 							<th>Profit Margin</th>
+							<th>Hours Logged</th>
+							<th>Velocity</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for project in projects %}
 							<tr>
 								<td><a href='/type?type={{project.type}}'>{{project.type}}</a></td>
+								<td><a href='/client?client={{project.client}}'>{{ project.client }}</a></td>
+								<td><a href='/projectNum?projectNum={{project.projectNum}}'>{{project.projectNum}}</a></td>
+								<td>{{ project.invoiceNum }}</td>
+								<td>{{ project.invoice }}</td>
 								<td><a href='/archivedYear?archivedYear={{project.archivedYear}}'>{{project.archivedYear}}</a></td>
 								<td><a href='/archivedDate?archivedDate={{project.archivedDate}}'>{{project.archivedDate}}</a></td>
-								<td><a href='/client?client={{project.client}}'>{{ project.client }}</a></td>
 								<td>{{project.profitMargin}}</td>
+								<td>{{project.hoursLogged}}</td>
+								<td>{{project.velocity}}</td>
 							</tr>
 						{% else %}
 							<tr>
@@ -82,40 +92,47 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">Add Record</h4>
-                                <p>Do not add a document to the database unless project has been completed and archived</p>
                             </div>
                         <div class="modal-body">
                             <form role="form" action="/add_conf" method="POST">
                                <div class="form-group">
-                                    <label for="type">type:</label>
-                                    <input type="string" name="type" value="" class="form-control" id="type">
+                                    <label for="type">* Type:</label>
+                                    <input type="type" name="type" value="" class="form-control" id="type">
                                 </div>
                                 <div class="form-group">
-                                    <label for="projectNum">projectNum:</label>
+                                    <label for="client">* Client:</label>
+                                    <input type="text" name="client" value="" class="form-control" id="client">
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectNum">* Project Number:</label>
                                     <input type="number" name="projectNum" value="" class="form-control" id="projectNum">
                                 </div>
                                 <div class="form-group">
-                                    <label for="client">client:</label>
-                                    <input type="text" name="client" value="" class="form-control" id="client">
+                                    <label for="invoice">* Invoice Number (ex: _12):</label>
+                                    <input type="number" name="invoiceNum" value="" class="form-control" id="invoiceNum">
                                 </div>
 								<div class="form-group">
-                                    <label for="invoice">invoice:</label>
-                                    <input type="number" name="invoice" value="" class="form-control" id="invoice">
+                                    <label for="invoice">* Invoice Amount:</label>
+                                    <input type="double" name="invoice" value="" class="form-control" id="invoice">
                                 </div>
                                 <div class="form-group">
-                                    <label for="profitMargin">profitMargin:</label>
-                                    <input type="double" name="profitMargin" value="" class="form-control" id="profitMargin">
+                                    <label for="archivedYear">* Archived/Recorded Year (ex: 2016):</label>
+                                    <input type="number" name="archivedYear" value="" class="form-control" id="archivedYear">
                                 </div>
                                 <div class="form-group">
-                                    <label for="hoursLogged">hoursLogged:</label>
-                                    <input type="double" name="hoursLogged" value="" class="form-control" id="hoursLogged">
-                                </div>
-                                <div class="form-group">
-                                    <label for="archivedDate">archivedDate:</label>
+                                    <label for="archivedDate">* Archived/Recorded Date (ex: 201606):</label>
                                     <input type="number" name="archivedDate" value="" class="form-control" id="archivedDate">
                                 </div>
                                 <div class="form-group">
-                                    <label for="velocity">velocity:</label>
+                                    <label for="profitMargin">Profit Margin:</label>
+                                    <input type="double" name="profitMargin" value="" class="form-control" id="profitMargin">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hoursLogged">Hours Logged:</label>
+                                    <input type="double" name="hoursLogged" value="" class="form-control" id="hoursLogged">
+                                </div>
+                                <div class="form-group">
+                                    <label for="velocity">Velocity:</label>
                                     <input type="number" name="velocity" value="" class="form-control" id="velocity">
                                 </div>
 								
