@@ -43,26 +43,30 @@
 				<thead>
 					<tr>
 						<th>Type</th>
-						<th>Archived Year</th>
-						<th>Archived Yr/Mo</th>
 						<th>Client</th>
 						<th>Project Number</th>
+						<th>Invoice Number</th>
+						<th>Invoice Amount</th>
+						<th>Archived Year</th>
+						<th>Archived Yr/Mo</th>
+						<th>Profit Margin</th>
 						<th>Hours Logged</th>
 						<th>Velocity</th>
-						<th>Profit Margin</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for project in projects %}
 						<tr>
 							<td><a href='/type?type={{project.type}}'>{{project.type}}</a></td>
+							<td><a href='/client?client={{project.client}}'>{{ project.client }}</a></td>
+							<td><a href='/type?type={{project.projectNum}}'>{{project.projectNum}}</a></td>
+							<td>{{ project.invoiceNum }}</td>
+							<td>{{ project.invoice }}</td>
 							<td><a href='/archivedYear?archivedYear={{project.archivedYear}}'>{{project.archivedYear}}</a></td>
 							<td><a href='/archivedDate?archivedDate={{project.archivedDate}}'>{{project.archivedDate}}</a></td>
-							<td><a href='/client?client={{project.client}}'>{{project.client}}</a></td>
-							<td>{{project.projectNum}}</td>
+							<td>{{project.profitMargin}}</td>
 							<td>{{project.hoursLogged}}</td>
 							<td>{{project.velocity}}</td>
-							<td>{{project.profitMargin}}</td>
 						</tr>
 					{% else %}
 						<tr>
