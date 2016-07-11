@@ -19,6 +19,18 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
     app.get('/', function(req, res){
 		db.collection('projects').find({}).sort({archivedDate: -1}).toArray(function(err, docs) {
 			res.render('home', { 'projects' : docs } );
+			
+			var archivedDateArray = [];
+			var profitMarginArray = [];
+			
+			//need to figure out how to pass this data into the chart.js dataset on the home page
+			docs.forEach(function(doc) {
+    		archivedDateArray.push(doc.archivedDate);
+			profitMarginArray.push(doc.profitMargin);
+});
+			console.log('archivedDateArray: ' + archivedDateArray.reverse());
+			console.log('profitMarginArray: ' + profitMarginArray.reverse());
+			
         });
     });
 	
