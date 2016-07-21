@@ -3,7 +3,8 @@ var express = require('express'),
     engines = require('consolidate'),
 	bodyParser = require('body-parser'),
     MongoClient = require('mongodb').MongoClient,
-    assert = require('assert');
+    assert = require('assert'),
+    route = require('./routes');
 
 app.engine('html', engines.nunjucks);
 app.set('view engine', 'html');
@@ -14,6 +15,13 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
 
     assert.equal(null, err);
     console.log("Successfully connected to MongoDB.");
+	
+//API
+	app.get('/api', function(req, res) {
+		db.collection('projects').find({}).sort({archivedDate: -1}).toArray(function (err, docs) {
+			res.json(docs);
+		});
+	});
 
 //	ALL PROJECTS SUMMARY
     app.get('/', function(req, res){
@@ -72,6 +80,10 @@ MongoClient.connect('mongodb://localhost:27017/Liqui-Site', function(err, db) {
         db.collection('projects').find({archivedDate: archivedDate}).sort({archivedDate: -1}).toArray(function(err, docs) {
 			res.render('queries', {'projects' : docs});
         });
+    });
+    
+    app.get('/surprise', function(req, res) {
+        route.surprise(req, res);
     });
     
 //	ADD CLIENT TO DEV DATABASE
